@@ -1,0 +1,32 @@
+{
+  "name": "pokedex",
+  "version": "1.0.0",
+  "description": "App to show details of Pokemon",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "build": "webpack --mode production",
+    "start": "webpack-dev-server --open --mode development",
+    "react-dev": "webpack -d --watch"
+  },
+  "author": "Riley Wong",
+  "license": "ISC",
+  "dependencies": {
+    "apollo-fetch": "^0.7.0",
+    "axios": "^0.19.2",
+    "nodemon": "^2.0.2",
+    "path": "^0.12.7",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "styled-components": "^5.1.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.9.0",
+    "@babel/preset-env": "^7.9.5",
+    "@babel/preset-react": "^7.9.4",
+    "babel": "^6.23.0",
+    "babel-loader": "^8.1.0",
+    "webpack": "^4.42.1",
+    "webpack-cli": "^3.3.11"
+  }
+}
