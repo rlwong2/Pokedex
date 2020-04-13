@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import styled from 'styled-components';
-import axios from 'axios';
 import { createApolloFetch } from 'apollo-fetch';
+import Main from './Main.jsx';
 
 const uri = 'http://localhost:5000/graphql';
 const apolloFetch = createApolloFetch({ uri });
@@ -35,7 +35,7 @@ const Top = styled.div`
   height: 150px;
 `
 
-const Main = styled.div`
+const Bottom = styled.div`
   border: 0px solid #000000;
   display: inline-grid;
   grid-template-columns: 420px auto;
@@ -51,7 +51,7 @@ const DiagStart = styled.div`
   width: 200px;
   height: 150px;
   border: solid #000000;
-  border-width: 0 0 1px 0;
+  border-width: 0 0 2px 0;
 `
 
 const Diag = styled.div`
@@ -59,28 +59,28 @@ const Diag = styled.div`
   top: 80px;
   left: 200px;
   width: 100px;
-  height: 70px;
-  background: linear-gradient(to top left, #DC143C calc(50% - 1px), #000, #DC143C calc(50% + 1px) );
+  height: 72px;
+  background: linear-gradient(to top left, #DC143C calc(50% - 1px), #000, #DC143C calc(50% + 2px) );
 `
 const DiagEnd = styled.div`
   position: absolute;
   top: 0;
-  left: 300px;
-  width: 180px;
+  left: 298px;
+  width: 182px;
   height: 80px;
   border: solid #000000;
-  border-width: 0 0 1px 0;
-
+  border-width: 0 0 2px 0;
+  z-index: 1;
 `
 
 const Sensor = styled.div`
-  background-color: #0389D6;
+  background-color: ${props => props.light === true ? "#5CC4FF" : "#0389D6"} ;
   border-radius: 50%;
   height: 90px;
   width: 90px;
   border: 12px solid #ffffff;
   margin: auto 15px auto 30px;
-  box-shadow: 0px 1px 0px 0px rgba(0,0,0,1);
+  box-shadow: ${props => props.light === true ? "0px 1px 0px 0px #fff" : "0px 5px 30px 0px #000"};
 `
 
 const RedLight = styled.div`
@@ -90,7 +90,7 @@ const RedLight = styled.div`
   width: 15px;
   border: 2px solid #333333;
   margin: 20px 0px 0px 12px;
-  box-shadow: 0px 5px 30px 0px rgba(153,153,153,1);
+  box-shadow: 0px 0px 1px 0px #000;
 `
 
 const YellowLight = styled(RedLight)`
@@ -99,112 +99,6 @@ const YellowLight = styled(RedLight)`
 
 const GreenLight = styled(RedLight)`
   background-color: #006400;
-`
-
-const ScreenAsm = styled.div`
-  position: relative;
-  top: 40px;
-  border: 1px solid #000000;
-  height: 260px;
-  width: 320px;
-  margin: 0 auto;
-  background-color: #FFF;
-  border-radius: 10px;
-  box-shadow: 0px 1px 0px 0px rgba(0,0,0,1);
-`
-
-const Screen = styled.div`
-  position: relative;
-  top: 30px;
-  font-weight: 500;
-  border: 1px solid #000000;
-  border-radius: 10px;
-  height: 200px;
-  width: 235px;
-  margin: auto;
-  background-color: #333333;
-`
-
-const ButtonAsm = styled.div`
-  grid-column-start: 1;
-  grid-column-end: 1;
-  border: 0px solid #000000;
-  font-weight: 500;
-  display: grid;
-  grid-template-columns: 120px 240px auto;
-  grid-template-rows: auto;
-`
-
-const CircleButton = styled.button`
-  position: absolute;
-  left: 40px;
-  top: 480px;
-  height: 60px;
-  width: 60px;
-  border: 1px solid #000000;
-  border-radius: 50%;
-  background-color: #333;
-  box-shadow: 0px 1px 0px 0px rgba(0,0,0,1);
-`
-
-const GreenButton = styled.button`
-  position: absolute;
-  left: 140px;
-  top: 460px;
-  border: 1px solid #000000;
-  border-radius: 4px;
-  background-color: #006400;
-  width: 40px;
-  height: 8px;
-  cursor: pointer;
-  margin: 20px 0px 0px 0px;
-  box-shadow: 0px 1px 0px 0px rgba(0,0,0,1);
-`
-
-const OrangeButton = styled(GreenButton)`
-  background-color: #FF8C00;
-  left: 200px;
-`
-
-const GreenPad = styled.button`
-  position: absolute;
-  left: 130px;
-  top: 520px;
-  border: 1px solid #000000;
-  border-radius: 5px;
-  background-color: #00A733;
-  width: 120px;
-  height: 80px;
-  cursor: pointer;
-  box-shadow: 0px 1px 0px 0px rgba(0,0,0,1);
-`
-
-const DirPad = styled.div`
-  position: absolute;
-  top: 480px;
-  left: 290px;
-  border: 1px #000000;
-  display: grid;
-  grid-template-columns: auto 35% auto;
-  grid-template-rows: auto 35% auto;
-  width: 100px;
-  height: 100px;
-`
-
-const Vert = styled.div`
-  grid-column-start: 2;
-  grid-column-end: 3;
-  grid-row-start: 1;
-  grid-row-end: 4;
-  background-color: #333;
-`
-
-const Horiz = styled.div`
-  grid-column-start: 1;
-  grid-column-end: 4;
-  grid-row-start: 2;
-  grid-row-end: 3;
-  background-color: #333;
 `
 
 const Hinge = styled.div`
@@ -217,21 +111,31 @@ const Hinge = styled.div`
   right: 0;
 `
 
+
+
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      pokemon: {}
+      pokemon: {},
+      light: false,
+      on: false
     }
-    this.getPokemon = this.getPokemon.bind(this)
+    this.getPokemon = this.getPokemon.bind(this);
+    this.handleFlash = this.handleFlash.bind(this);
   }
 
   componentDidMount() {
-    this.getPokemon('pikachu')
+
   }
 
+  handleFlash() {
+    this.setState({light: !this.state.light})
+  }
 
   getPokemon(pokemon) {
+    console.log('flash on')
+    let flash = setInterval(this.handleFlash, 300)
     const query = `
     query {
       pokemon(name: "Pikachu") {
@@ -272,14 +176,16 @@ class App extends React.Component {
       })
     })
     .catch(error => {
-      console.log('API Error')
-    });
+      console.log('Fetch Error')
+    })
+    .finally(clearInterval(flash))
+    console.log('flash off')
   }
 
   render() {
     return (<Container>
     <Top>
-      <Sensor />
+      <Sensor light={this.state.light} />
       <RedLight />
       <YellowLight />
       <GreenLight />
@@ -287,22 +193,10 @@ class App extends React.Component {
       <Diag />
       <DiagEnd />
     </Top>
-    <Main>
-      <ScreenAsm>
-        <Screen></Screen>
-      </ScreenAsm>
-      <ButtonAsm>
-          <CircleButton />
-          <GreenButton />
-          <OrangeButton />
-          <GreenPad />
-          <DirPad>
-            <Vert />
-            <Horiz />
-          </DirPad>
-      </ButtonAsm>
+    <Bottom>
+      <Main getPokemon={this.getPokemon} powerOn={this.state.on} />
       <Hinge />
-    </Main>
+    </Bottom>
 
     </Container>)
   }
