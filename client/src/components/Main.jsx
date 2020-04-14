@@ -1,20 +1,27 @@
 import React from 'react';
 import styled from 'styled-components';
 import ScreenDisplay from './ScreenDisplay.jsx';
-import Buttons from './Buttons.jsx';
+import ButtonAsm from './Buttons.jsx';
 
 const MainContainer = styled.div`
 
 `
 
-const Main = (props) => {
-  return (
-    <MainContainer>
-      <ScreenDisplay />
-      <Buttons getPokemon={props.getPokemon} powerOn={props.powerOn} />
-    </MainContainer>
+class Main extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+    }
+  }
 
-  )
+  render() {
+    return (
+     <MainContainer>
+       <ScreenDisplay />
+       <ButtonAsm getPokemon={this.props.getPokemon} />
+     </MainContainer>
+   )
+  }
 }
 
 

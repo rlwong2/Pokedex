@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import styled from 'styled-components';
 import { createApolloFetch } from 'apollo-fetch';
 import Main from './Main.jsx';
+import catchPokemon from './query.js';
 
 const uri = 'http://localhost:5000/graphql';
 const apolloFetch = createApolloFetch({ uri });
@@ -80,7 +81,7 @@ const Sensor = styled.div`
   width: 90px;
   border: 12px solid #ffffff;
   margin: auto 15px auto 30px;
-  box-shadow: ${props => props.light === true ? "0px 1px 0px 0px #fff" : "0px 5px 30px 0px #000"};
+  box-shadow: ${props => props.light === true ? "0px 1px 0px 0px #fff" : "0px 2px 2px 0px #000"};
 `
 
 const RedLight = styled.div`
@@ -88,9 +89,9 @@ const RedLight = styled.div`
   border-radius: 50%;
   height: 15px;
   width: 15px;
-  border: 2px solid #333333;
+  border: 1px solid #333333;
   margin: 20px 0px 0px 12px;
-  box-shadow: 0px 0px 1px 0px #000;
+  box-shadow: 0px 0px 2px 0px #000;
 `
 
 const YellowLight = styled(RedLight)`
@@ -110,7 +111,6 @@ const Hinge = styled.div`
   bottom: 0;
   right: 0;
 `
-
 
 
 class App extends React.Component {
@@ -134,40 +134,8 @@ class App extends React.Component {
   }
 
   getPokemon(pokemon) {
-    console.log('flash on')
-    let flash = setInterval(this.handleFlash, 300)
-    const query = `
-    query {
-      pokemon(name: "Pikachu") {
-        id
-        number
-        name
-        attacks {
-          special {
-            name
-            type
-            damage
-          }
-        }
-        evolutions {
-          id
-          number
-          name
-          weight {
-            minimum
-            maximum
-          }
-          attacks {
-            fast {
-              name
-              type
-              damage
-            }
-          }
-        }
-      }
-    }
-    `
+    let query = catchPokemon(pokemon)
+
     apolloFetch({ query })
     .then((result) => {
       console.log(result)
@@ -178,8 +146,7 @@ class App extends React.Component {
     .catch(error => {
       console.log('Fetch Error')
     })
-    .finally(clearInterval(flash))
-    console.log('flash off')
+
   }
 
   render() {
@@ -194,7 +161,7 @@ class App extends React.Component {
       <DiagEnd />
     </Top>
     <Bottom>
-      <Main getPokemon={this.getPokemon} powerOn={this.state.on} />
+      <Main getPokemon={this.getPokemon} handleFlash={this.handleFlash} powerOn={this.state.on} />
       <Hinge />
     </Bottom>
 

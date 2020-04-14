@@ -50,7 +50,7 @@ const GreenPad = styled.button`
   top: 520px;
   border: 1px solid #000000;
   border-radius: 5px;
-  background-color: #00A733;
+  background-color: ${props => props.display === "ON" ? "#FF8C00" : "#00A733"};
   width: 120px;
   height: 80px;
   cursor: pointer;
@@ -93,35 +93,46 @@ const HorizL = styled.div`
   box-shadow: 0px 2px 0px 0px rgba(0,0,0,1);
 `
 
-const HorizR = styled.div`
+const HorizR = styled(HorizL)`
   grid-column-start: 3;
   grid-column-end: 4;
   grid-row-start: 2;
   grid-row-end: 3;
-  background-color: #333;
-  border: 1px solid #000;
   border-width: 1px 1px 1px 0;
-  box-shadow: 0px 2px 0px 0px rgba(0,0,0,1);
 `
 
-const Buttons = (props) => {
-  const [display, setDisplay] = useState('OFF');
+class ButtonAsm extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      display: 'OFF'
+    }
+    this.handlePress = this.handlePress.bind(this);
+  }
 
-  return (
-    <ButtonsContainer>
-      <CircleButton onClick={props.getPokemon} />
-      <GreenButton></GreenButton>
-      <OrangeButton />
-  <GreenPad onClick={() => setDisplay('ON')}>{display}</GreenPad>
-      <DirPad>
-        <HorizL />
-        <Vert />
-        <HorizR />
-      </DirPad>
-    </ButtonsContainer>
-  )
+  handlePress () {
+    let show = this.state.display === 'OFF' ? 'ON' : 'OFF';
+    this.setState({ display: show })
+    this.props.getPokemon()
+  }
+
+  render() {
+    return (
+      <ButtonsContainer>
+        <CircleButton />
+        <GreenButton />
+        <OrangeButton />
+        <GreenPad display={this.state.display} onClick={this.handlePress}>{this.state.display}</GreenPad>
+        <DirPad>
+          <HorizL />
+          <Vert />
+          <HorizR />
+        </DirPad>
+      </ButtonsContainer>
+    )
+  }
 }
 
 
-export default Buttons;
+export default ButtonAsm;
 
