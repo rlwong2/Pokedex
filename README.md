@@ -7,6 +7,6 @@
 [Pokemon GraphQL API](https://github.com/lucasbento/graphql-pokemon) running on http://localhost:5000
 
 # How to use
-⋅⋅* Clone the repo
-⋅⋅* Run Pokemon GraphQL application on local machine
-⋅⋅* npm run start
+⋅⋅*Clone the repo
+⋅⋅*Run Pokemon GraphQL application on local machine
+⋅⋅*npm run start
