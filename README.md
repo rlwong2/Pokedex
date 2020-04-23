@@ -4,7 +4,7 @@
 Feel free to check it out!
 
 # Requirements
-Pokemon GraphQL application running on http://localhost:5000
+[Pokemon GraphQL API](https://github.com/lucasbento/graphql-pokemon) running on http://localhost:5000
 
 # How to use
 Clone the repo
